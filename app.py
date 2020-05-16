@@ -1,3 +1,4 @@
+import atexit
 import re
 from datetime import datetime
 
@@ -9,6 +10,11 @@ PSN_STORE_GAMES_URL = 'https://store.playstation.com/en-id/grid/STORE-MSF86012-G
 LAST_PAGE_NUM = 156
 MINIMUM_DISCOUNT_THRESHOLD = 70
 REQUEST_TIMEOUT = 15
+
+
+def exit_handler(discount_games):
+    print('Exiting program...')
+    write_sorted_discount_game(discount_games)
 
 
 def get_game_price(section):
@@ -70,6 +76,7 @@ def write_sorted_discount_game(discount_games):
 
 def main():
     discount_games = []
+    atexit.register(exit_handler, discount_games)
 
     for index_page in range(1, LAST_PAGE_NUM + 1):
         print('Accessing page', index_page)
@@ -106,8 +113,6 @@ def main():
                     'price_after': price_after_text,
                 }
                 discount_games.append(game_data)
-
-    write_sorted_discount_game(discount_games)
 
 
 if __name__ == '__main__':
