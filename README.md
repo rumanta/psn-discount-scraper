@@ -2,17 +2,23 @@
 
 PSN-discount-scrapper is a simple program to scrap (collect) and sort all discount games within a threshold in Playstation store.
 
-## Usage
+For more detail, please check out my output file in `example` folder
 
-1.First download the folder (or the `scrapper_app`)
+## Instructions
 
-2.Open up your terminal (MacOS/Linux) and access the downloaded folder.
+1.&nbsp;First download the folder (or the `scrapper_app`)
 
-3.Simply run the app by run this command in your terminal:
+2.&nbsp;Open up your terminal (MacOS/Linux) and access the downloaded folder.
+
+3.&nbsp;Simply run the app by run this command in your terminal:
 
 ```bash
 ./scrapper_app
 ```
+
+4.&nbsp;Wait for about 10 mins (may vary based on your connection speed) until the program is exited
+
+5.&nbsp;The output will be written in `discount_game_list.txt`
 
 ## [Dev] Installation
 
