@@ -1,5 +1,7 @@
 import atexit
+import os
 import re
+import sys
 from datetime import datetime
 
 import requests
@@ -10,6 +12,27 @@ PSN_STORE_GAMES_URL = 'https://store.playstation.com/en-id/grid/STORE-MSF86012-G
 LAST_PAGE_NUM = 156
 MINIMUM_DISCOUNT_THRESHOLD = 70
 REQUEST_TIMEOUT = 15
+
+
+def update_discount_threshold_if_any():
+    if len(sys.argv) == 0:
+        return
+
+    adjusted_discount = sys.argv[-1]
+
+    try:
+        adjusted_discount = int(adjusted_discount)
+        if adjusted_discount < 0 or adjusted_discount > 100:
+            print('Please define discount within 0 - 100 range')
+            os._exit(1)
+    except:
+        if 'app' not in adjusted_discount:
+            print('Please use numbers only to define the discount e.g. 50')
+            os._exit(1)
+        return
+
+    global MINIMUM_DISCOUNT_THRESHOLD
+    MINIMUM_DISCOUNT_THRESHOLD = adjusted_discount
 
 
 def exit_handler(discount_games):
@@ -75,11 +98,14 @@ def write_sorted_discount_game(discount_games):
 
 
 def main():
+    update_discount_threshold_if_any()
+    print(f'Collecting discount games >= {MINIMUM_DISCOUNT_THRESHOLD}%...')
+
     discount_games = []
     atexit.register(exit_handler, discount_games)
 
     for index_page in range(1, LAST_PAGE_NUM + 1):
-        print('Accessing page', index_page)
+        print('Accessing PSN store page', index_page)
         try:
             page = requests.get(f'{PSN_STORE_GAMES_URL}{index_page}', timeout=REQUEST_TIMEOUT)
         except:
