@@ -7,7 +7,7 @@ from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
 
-PSN_BASE_URL = 'https://store.playstation.com/'
+PSN_BASE_URL = 'https://store.playstation.com'
 PSN_STORE_GAMES_URL = 'https://store.playstation.com/en-id/grid/STORE-MSF86012-GAMESALL/'
 LAST_PAGE_NUM = 156
 MINIMUM_DISCOUNT_THRESHOLD = 70
